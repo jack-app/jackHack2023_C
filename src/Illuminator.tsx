@@ -7,7 +7,7 @@ export const Illuminator: React.FC<{
   elevation?: number
   color?: ColorRepresentation
 }> = ({
-  elevation = 100,
+  elevation = 100, //高度
   color = '#ff9f46' // T = 2500K
 }) => {
   const ref = useRef<Group>(null)
