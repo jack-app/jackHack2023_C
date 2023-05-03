@@ -1,6 +1,6 @@
 import { Sphere } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ColorRepresentation, Group, Plane, Raycaster, Vector3 } from 'three'
 
 export const Illuminator: React.FC<{
@@ -15,24 +15,25 @@ export const Illuminator: React.FC<{
   const [raycaster] = useState(() => new Raycaster())
   const [plane] = useState(() => new Plane(new Vector3(0, 1, 0)))
   plane.constant = -elevation
+  
+  const [update,setUpdata]=useState<boolean>(false)
 
   useFrame(({ camera, mouse }) => {
-    if (ref.current == null) {
+    if (ref.current == null || lookat.current == null) {
       return
     }
     raycaster.setFromCamera(mouse, camera)
     raycaster.ray.intersectPlane(plane, ref.current.position)
-    if (lookat.current != null) {
-      lookat.current.position.copy(ref.current.position)
-      lookat.current.position.y= 1
-    }
+    lookat.current.position.copy(ref.current.position)
+    lookat.current.position.y = 0
+    setUpdata(update?false:true)
   })
 
   return (
     <>
       <Sphere ref={lookat} args={[1, 32]}/>
       <group ref={ref}>
-        <spotLight
+        {lookat.current && <spotLight
           target={lookat.current}
           angle={Math.PI / 4}
           distance={1000}
@@ -41,7 +42,7 @@ export const Illuminator: React.FC<{
           castShadow
           shadow-radius={20}
           shadow-mapSize={[2048, 2048]}
-          />
+          />}
         <Sphere args={[5, 32]}>
           <meshStandardMaterial emissive={color} emissiveIntensity={10} />
         </Sphere>
