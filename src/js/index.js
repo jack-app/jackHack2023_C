@@ -1,8 +1,7 @@
 import * as THREE from "three";
+import { Box3, Matrix4, Mesh, Vector3 } from 'three'
 import { TilesRenderer } from '3d-tiles-renderer';
 import { GLTFLoader } from 'three-stdlib'
-import GLTFFILE from "../../gltf/53394525_bldg_6677.glb";
-
 import { CesiumRTCPlugin } from './CesiumRTCPlugin'
 
 let mouseX = 0,
@@ -10,28 +9,28 @@ let mouseX = 0,
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 
-let needsRerender = true;
+let tilesRenderer = null;
 // シーンを追加
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x333333);
 
-// ライトを追加
-// 環境光
+// // ライトを追加
+// // 環境光
 const ambientLight = new THREE.AmbientLight(0xcccccc, 0.5);
 scene.add(ambientLight);
-// 太陽光
-const light = new THREE.DirectionalLight(0xffffff, 1);
-scene.add(light);
-// ポイントライト
-const pointLight = new THREE.PointLight(0xffffff, 0.8);
-scene.add(pointLight);
+// // 太陽光
+// const light = new THREE.DirectionalLight(0xffffff, 1);
+// scene.add(light);
+// // ポイントライト
+// const pointLight = new THREE.PointLight(0xffffff, 0.8);
+// scene.add(pointLight);
 
-// 1km四方の地面を追加
-const geometry = new THREE.PlaneGeometry(1000, 1000);
-const material = new THREE.MeshBasicMaterial({ color: 0x666666, side: THREE.DoubleSide });
-const plane = new THREE.Mesh(geometry, material);
-plane.rotation.x = (90 * Math.PI) / 180;
-scene.add(plane);
+// // 1km四方の地面を追加
+// const geometry = new THREE.PlaneGeometry(1000, 1000);
+// const material = new THREE.MeshBasicMaterial({ color: 0x666666, side: THREE.DoubleSide });
+// const plane = new THREE.Mesh(geometry, material);
+// plane.rotation.x = (90 * Math.PI) / 180;
+// scene.add(plane);
 
 // カメラの追加
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
@@ -43,35 +42,53 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const tilesRenderer = await new TilesRenderer('https://plateau.geospatial.jp/main/data/3d-tiles/bldg/01100_sapporo/notexture/tileset.json');
-console.log(tilesRenderer)
-const gltfLoader = new GLTFLoader()
-gltfLoader.register(parser => new CesiumRTCPlugin(parser))
+// const url = 'https://plateau.geospatial.jp/main/data/3d-tiles/bldg/01100_sapporo/notexture/tileset.json'
+// const url = 'https://assets.cms.plateau.reearth.io/assets/11/6d05db-ed47-4f88-b565-9eb385b1ebb0/13100_tokyo23-ku_2022_3dtiles%20_1_1_op_bldg_13101_chiyoda-ku_lod1/tileset.json'
+const url = 'https://plateau.geospatial.jp/main/data/3d-tiles/bldg/13100_tokyo/13101_chiyoda-ku/notexture/tileset.json'
+const createTiles = () => {
+    const tilesRenderer = new TilesRenderer(url);
+    console.log(tilesRenderer)
+    const gltfLoader = new GLTFLoader()
+    gltfLoader.register(parser => new CesiumRTCPlugin(parser))
 
-tilesRenderer.manager.addHandler(/\.gltf$/, gltfLoader);
-tilesRenderer.setCamera(camera);
-tilesRenderer.setResolutionFromRenderer(camera, renderer);
-tilesRenderer.onLoadTileSet = () => needsRerender = true;
-tilesRenderer.onLoadModel = () => needsRerender = true;
+    tilesRenderer.manager.addHandler(/\.gltf$/, gltfLoader);
+    tilesRenderer.setCamera(camera);
+    tilesRenderer.setResolutionFromRenderer(camera, renderer);
+    // tilesRenderer.onLoadTileSet = () => {
+    //     // if (centerRef.current) {
+    //     const box = new Box3()
+    //     const matrix = new Matrix4()
+    //     tilesRenderer.getOrientedBounds(box, matrix)
+    //     box.min.z = box.max.z = Math.min(box.min.z, box.max.z)
+    //     box.applyMatrix4(matrix)
+    //     const center = new Vector3()
+    //     box.getCenter(center)
+    //     // setCenter(center)
+    //     // }
+    // }
 
-scene.add(tilesRenderer.group);
+
+    // タイル内のすべてのオブジェクトに影とマテリアルを適用する。
+    tilesRenderer.onLoadModel = scene => {
+        console.log(scene)
+        scene.traverse(object => {
+            object.castShadow = true
+            object.receiveShadow = true
+            if (object instanceof Mesh) {
+                object.material = material
+            }
+        })
+    }
+    return tilesRenderer
+}
+
 
 console.log(scene.children)
 // 描画開始
-animate();
 
-// GLTFファイルを読み込む
-// const gltfLoader = new GLTFLoader();
-// gltfLoader.load(
-//     GLTFFILE,
-//     (gltf) => {
-//         scene.add(gltf.scene);
-//     },
-//     undefined,
-//     (error) => {
-//         console.error(error);
-//     }
-// );
+tilesRenderer = createTiles()
+scene.add(tilesRenderer.group);
+animate();
 
 // マウスイベントなどを設定
 document.addEventListener("mousemove", onDocumentMouseMove);
@@ -88,12 +105,10 @@ function render() {
     camera.position.x += (mouseX - camera.position.x) * 0.05;
     camera.position.y += (-mouseY - camera.position.y) * 0.05;
     camera.lookAt(new THREE.Vector3(0, 10, 0));
-    if (needsRerender) {
-        needsRerender = false;
-        camera.updateMatrixWorld();
+    if (tilesRenderer) {
         tilesRenderer.update();
-        renderer.render(scene, camera);
     }
+    // console.log(tilesRenderer)
     renderer.render(scene, camera);
 }
 
@@ -111,42 +126,3 @@ function onDocumentMouseMove(event) {
     mouseX = (event.clientX - windowHalfX) / 2;
     mouseY = (event.clientY - windowHalfY) / 2;
 }
-// // initialize threee scene
-// const scene = new THREE.Scene();
-// // initialize three camera
-// const camera = new THREE.PerspectiveCamera(
-//     75,
-//     window.innerWidth / window.innerHeight,
-//     0.1,
-//     1000
-// );
-// // initialize three renderer
-// const renderer = new THREE.WebGLRenderer();
-// renderer.setSize(window.innerWidth, window.innerHeight);
-// document.body.appendChild(renderer.domElement);
-// // initialize three controls
-// const controls = new THREE.OrbitControls(camera, renderer.domElement);
-// // initialize three lights
-// const light = new THREE.AmbientLight(0xffffff, 0.5);
-// scene.add(light);
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-// scene.add(directionalLight);
-// // initialize three tiles renderer
-// const tilesRenderer = new TilesRenderer('https://assets.cms.plateau.reearth.io/assets/11/6d05db-ed47-4f88-b565-9eb385b1ebb0/13100_tokyo23-ku_2022_3dtiles%20_1_1_op_bldg_13101_chiyoda-ku_lod1/tileset.json');
-// tilesRenderer.setCamera(camera);
-// tilesRenderer.setResolutionFromRenderer(camera, renderer);
-// scene.add(tilesRenderer.group);
-
-// renderLoop();
-
-// function renderLoop() {
-
-//     requestAnimationFrame(renderLoop);
-
-//     // The camera matrix is expected to be up to date
-//     // before calling tilesRenderer.update
-//     camera.updateMatrixWorld();
-//     tilesRenderer.update();
-//     renderer.render(scene, camera);
-
-// }

@@ -6,6 +6,7 @@ export class CesiumRTCPlugin implements GLTFLoaderPlugin {
   constructor(private readonly parser: GLTFParser) {}
 
   afterRoot(result: GLTF): null {
+    console.log('afterroot')
     if (this.parser.json.extensions?.CESIUM_RTC?.center != null) {
       const center: [number, number, number] =
         this.parser.json.extensions.CESIUM_RTC.center
