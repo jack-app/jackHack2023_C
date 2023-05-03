@@ -5,6 +5,7 @@ import { BlendFunction } from 'postprocessing'
 import React from 'react'
 
 import { Illuminator } from '../src/Illuminator'
+import { FixIlluminator } from '../src/FixIlluminator'
 import { PlateauTileset } from '../src/PlateauTileset'
 import { PlateauTilesetTransform } from '../src/PlateauTilesetTransform'
 
@@ -33,7 +34,8 @@ export const App: React.FC = () => (
       />
       <PlateauTileset path='bldg/13100_tokyo/13102_chuo-ku/notexture' />
     </PlateauTilesetTransform>
-    <Illuminator />
+    {/* <Illuminator /> */}
+    <FixIlluminator />
     <EffectComposer>
       <SSAO intensity={3000} blendFunction={BlendFunction.OVERLAY} />
       <Bloom intensity={2} />

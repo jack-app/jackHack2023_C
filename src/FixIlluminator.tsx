@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import React, { useRef, useState } from 'react'
 import { ColorRepresentation, Group, Plane, Raycaster, Vector3 } from 'three'
 
-export const Illuminator: React.FC<{
+export const FixIlluminator: React.FC<{
   elevation?: number
   color?: ColorRepresentation
 }> = ({
@@ -15,17 +15,25 @@ export const Illuminator: React.FC<{
   const [plane] = useState(() => new Plane(new Vector3(0, 1, 0)))
   plane.constant = -elevation
 
+  let isFix = false
+  const fixIlluminator = () => {
+    isFix = !isFix
+  }
 
-  useFrame(({ camera, mouse }) => {
+
+  useFrame(({ camera, mouse}) => {
     if (ref.current == null) {
       return
     }
-    raycaster.setFromCamera(mouse, camera)
-    raycaster.ray.intersectPlane(plane, ref.current.position)
+    if (!isFix){
+        raycaster.setFromCamera(mouse, camera)
+        raycaster.ray.intersectPlane(plane, ref.current.position)
+    }
   })
 
+
   return (
-    <group ref={ref}>
+    <group ref={ref} onClick={fixIlluminator}>
       <pointLight
         distance={1000}
         intensity={2}
