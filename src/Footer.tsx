@@ -5,7 +5,7 @@ export const Footer: React.FC = () => (
   // Reactでは、複数の要素を返すことができない。
   // そのため、以下のようにReact.Fragmentを使う必要がある
   <>
-    <p
+    <div
       css={css`
       .footer02 {
         color: #FFFEF6;
@@ -51,11 +51,7 @@ export const Footer: React.FC = () => (
   </p>
   </ul>
 </div>
-    </p>
-    <p
-    >
-      
-    </p>
-    
-  </>
+  
+</div>
+</>
 );
