@@ -16,28 +16,15 @@ export const App: React.FC = () => (
     <Title />
     <Description />
     <Canvas shadows>
-      <fogExp2 attach='fog' color='#d7ecff' density={0.0002} />
-      <PerspectiveCamera
-        makeDefault
-        position={[-1600, 450, -1400]}
-        near={10}
-        far={1e5}
-      />
+      <fogExp2 attach="fog" color="#d7ecff" density={0.0002} />
+      <PerspectiveCamera makeDefault position={[-1600, 450, -1400]} near={10} far={1e5} matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined} />
       <OrbitControls target={[-1200, 0, -800]} />
-      <Plane
-        args={[1e5, 1e5]}
-        position={[0, 12, 0]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        receiveShadow
-      >
-        <meshStandardMaterial color='white' />
+      <Plane args={[1e5, 1e5]} position={[0, 12, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined} getVertexPosition={undefined}>
+        <meshStandardMaterial color="white" />
       </Plane>
       <PlateauTilesetTransform>
-        <PlateauTileset
-          path='bldg/13100_tokyo/13101_chiyoda-ku/notexture'
-          center
-        />
-        <PlateauTileset path='bldg/13100_tokyo/13102_chuo-ku/notexture' />
+        <PlateauTileset path="bldg/13100_tokyo/13101_chiyoda-ku/notexture" center />
+        <PlateauTileset path="bldg/13100_tokyo/13102_chuo-ku/notexture" />
       </PlateauTilesetTransform>
       <Illuminator />
       <EffectComposer>
