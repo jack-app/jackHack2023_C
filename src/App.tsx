@@ -16,7 +16,7 @@ export const App: React.FC = () => (
     <Title />
     <Description />
     <Canvas shadows>
-      <fogExp2 attach='fog' color='#d7ecff' density={0.0002} />
+      <fog attach='fog' color='#d7ecff' near={1000} far={10000} />
       <PerspectiveCamera
         makeDefault
         position={[-1600, 450, -1400]}

@@ -42,9 +42,7 @@ export const Illuminator: React.FC<{
       <group ref={ref} onClick={fixIlluminator}>
         {lookat.current && <spotLight
           target={lookat.current}
-          angle={Math.PI / 4}
-          distance={1000}
-          intensity={2}
+          angle={1.37}
           color={color}
           castShadow
           shadow-radius={20}
