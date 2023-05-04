@@ -23,12 +23,13 @@ export const PlateauTileset: React.FC<PlateauTilesetProps> = ({ path, center = f
   const { setCenter } = useContext(PlateauTilesetTransformContext);
   const centerRef = useRef(center);
   centerRef.current = center;
+  let centerForDiff = new Vector3();
 
   const createTiles = useCallback(
     (path: string) => {
       const tiles = new TilesRenderer(path);
       tiles.manager.addHandler(/\.gltf$/, gltfLoader);
-      console.log(path)
+      console.log(path);
 
       // `center` が指定されているとき、タイルの境界ボックスの底面の中央を
       // PlateauTilesetTransform の位置として指定する。
