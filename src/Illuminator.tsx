@@ -1,7 +1,9 @@
 import { Sphere } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
 import React, { useEffect, useRef, useState } from 'react'
 import { ColorRepresentation, Group, Plane, Raycaster, Vector3 } from 'three'
+import { TextureLoader } from 'three/src/loaders/TextureLoader'
+
 
 export const Illuminator: React.FC<{
   elevation?: number
@@ -22,6 +24,7 @@ export const Illuminator: React.FC<{
   const fixIlluminator = () => {
     isFix = !isFix
   }
+  const texture = useLoader(TextureLoader, 'PavingStones092_1K_Color.jpg')
 
   useFrame(({ camera, mouse }) => {
     if (ref.current == null || lookat.current == null) {
@@ -31,14 +34,18 @@ export const Illuminator: React.FC<{
       raycaster.setFromCamera(mouse, camera)
       raycaster.ray.intersectPlane(plane, ref.current.position)
       lookat.current.position.copy(ref.current.position)
-      lookat.current.position.y = 0
+      lookat.current.position.y = 100
       setUpdata(update?false:true)
     }
   })
 
+
   return (
     <>
-      <Sphere ref={lookat} args={[1, 32]}/>
+      <mesh ref={lookat}>
+        <circleGeometry args={[100, 40]}  />
+        <meshStandardMaterial map={texture}/>
+      </mesh>
       <group ref={ref} onClick={fixIlluminator}>
         {lookat.current && <spotLight
           target={lookat.current}

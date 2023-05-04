@@ -26,7 +26,7 @@ export const App: React.FC = () => (
       <OrbitControls target={[-1200, 0, -800]} />
       <Plane
         args={[1e5, 1e5]}
-        position={[0, 1, 0]}
+        position={[0, 0, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
         receiveShadow
       >
