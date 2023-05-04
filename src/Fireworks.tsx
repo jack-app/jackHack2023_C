@@ -5,7 +5,8 @@ import {
   BufferGeometry, 
   Float32BufferAttribute,
   PointsMaterial,
-  Points
+  Points,
+  Matrix4
 } from 'three'
 
 import type { Mesh } from 'three';
@@ -57,8 +58,13 @@ export const Fireworks: React.FC<FireworksProps> = ({
       return
     }
     ref.current.position.copy(position)
+    mesh.applyMatrix4(new Matrix4().set(
+      1.01, 0, 0, 0,
+      0, 1.01, 0, 0,
+      0, 0, 1.01, 0,
+      0, 0, 0, 1
+    ))
   })
-  
   return(
     <primitive ref={ref} object={mesh}/>
   )
