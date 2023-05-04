@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber'
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import {
   Vector3,
   BufferGeometry, 
@@ -48,7 +48,7 @@ function makeFireworks(radious, length){
 const SIZE = 100;
 // 配置する個数
 const LENGTH = 1000;
-const mesh = makeFireworks(SIZE, LENGTH)
+let mesh = makeFireworks(SIZE, LENGTH)
 
 export interface FireworksProps {
   position: Vector3
@@ -58,7 +58,16 @@ export const Fireworks: React.FC<FireworksProps> = ({
   position
 }) => {
   const ref = useRef<Mesh>(null)
+  const [count, setCount] = useState(0);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      mesh = makeFireworks(SIZE, LENGTH)
+      setCount(c => c + 1);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+  
   useFrame(() => {
     if (ref.current == null) {
       return
