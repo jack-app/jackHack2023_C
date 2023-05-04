@@ -36,7 +36,8 @@ function makeFireworks(radious, length){
     // 一つ一つのサイズ
     size: 10,
     // 色
-    color: "#CB4829"
+    color: "#CB4829",
+    transparent : true
   });
   
   // 物体を作成
@@ -58,13 +59,11 @@ export const Fireworks: React.FC<FireworksProps> = ({
   position
 }) => {
   const ref = useRef<Mesh>(null)
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       mesh = makeFireworks(SIZE, LENGTH)
-      setCount(c => c + 1);
-    }, 1500);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
   
@@ -79,6 +78,7 @@ export const Fireworks: React.FC<FireworksProps> = ({
       0, 0, 1.01, 0,
       0, 0, 0, 1
     ))
+    mesh.material.opacity = Math.max(0, mesh.material.opacity-0.01)
   })
   return(
     <primitive ref={ref} object={mesh}/>
