@@ -5,13 +5,9 @@ export const Title: React.FC = () => (
   // Reactでは、複数の要素を返すことができない。
   // そのため、以下のようにReact.Fragmentを使う必要がある
   <>
-    <h1
-      css={css`
-        color: red;
-        font-weight: bold;
-      `}
-    >
-      タイトル
-    </h1>
+    
+    
+    <img src="/images/title_5.png"width = {1450} height = {850}/>
+    {/* <img src="/images/title.png"width = {1450} height = {1100}/> */}
   </>
 );
