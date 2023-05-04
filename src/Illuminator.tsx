@@ -3,7 +3,7 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import React, { useEffect, useRef, useState } from 'react'
 import { ColorRepresentation, Group, Plane, Raycaster, Vector3 } from 'three'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
-
+import type { Mesh } from 'three';
 
 export const Illuminator: React.FC<{
   elevation?: number
@@ -13,7 +13,7 @@ export const Illuminator: React.FC<{
   color = '#fd7e00'
 }) => {
   const ref = useRef<Group>(null)
-  const lookat = useRef<Sphere>(null)
+  const lookat = useRef<Mesh>(null)
   const [raycaster] = useState(() => new Raycaster())
   const [plane] = useState(() => new Plane(new Vector3(0, 1, 0)))
   plane.constant = -elevation
@@ -44,7 +44,7 @@ export const Illuminator: React.FC<{
     <>
       <mesh ref={lookat}>
         <circleGeometry args={[100, 40]}  />
-        <meshStandardMaterial map={texture}/>
+        <meshBasicMaterial map={texture}/>
       </mesh>
       <group ref={ref} onClick={fixIlluminator}>
         {lookat.current && <spotLight
