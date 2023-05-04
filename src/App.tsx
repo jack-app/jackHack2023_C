@@ -22,34 +22,42 @@ export const App: React.FC = () => {
     setFireworkLocation({ x: Number(x), y: Number(y), z: Number(z) });
   };
 
-  return (
-    <>
-      <Title />
-      <Description />
-      <LocationSelect onChangeLocation={onChangeLocationPath} />
-      <Canvas shadows>
-        <axesHelper args={[1000]} />
-        <fogExp2 attach="fog" color="#d7ecff" density={0.0002} />
-        <PerspectiveCamera makeDefault position={[-1600, 12 + 400, -1400]} near={10} far={1e5} />
-        <OrbitControls target={[-1200, 0, -800]} />
-        {/* <Plane
-          args={[1e5, 1e5]}
-          position={[0, 12, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          receiveShadow
-        >
-          <meshStandardMaterial color='white' />
-        </Plane> */}
-        <PlateauTilesetTransform>
-          <PlateauTileset path={locationPath} center />
-        </PlateauTilesetTransform>
-        <Illuminator fireworkLocation={fireworkLocation} />
-        {/* <EffectComposer>
-          <SSAO intensity={3000} blendFunction={BlendFunction.OVERLAY} />
-          <Bloom intensity={2} />
-        </EffectComposer> */}
-      </Canvas>
-      <Footer />
-    </>
-  );
-};
+  return(
+  <>
+    <Title />
+    <Description />
+    <LocationSelect onChangeLocation={onChangeLocationPath} />
+    <Canvas shadows>
+      <ambientLight intensity={0.1} />  
+      <fog attach='fog' color='#d7ecff' near={2000} far={10000} />
+      {/* @ts-ignore */}
+      <PerspectiveCamera
+        makeDefault
+        position={[-1600, 450, -1400]}
+        near={10}
+        far={1e5}
+      />
+      <OrbitControls target={[-1200, 0, -800]} />
+      {/* @ts-ignore */}
+      <Plane
+        args={[1e5, 1e5]}
+        position={[0, 0, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        receiveShadow
+      >
+        <meshStandardMaterial color='gray' />
+      </Plane>
+      <PlateauTilesetTransform>
+        <PlateauTileset path="bldg/13100_tokyo/13101_chiyoda-ku/notexture" center />
+        <PlateauTileset path="bldg/13100_tokyo/13102_chuo-ku/notexture" />
+      </PlateauTilesetTransform>
+      <Illuminator />
+      <EffectComposer>
+        <SSAO intensity={3000} blendFunction={BlendFunction.OVERLAY} />
+        <Bloom intensity={2} />
+      </EffectComposer>
+    </Canvas>
+    <Footer />
+  </>
+)};
+
