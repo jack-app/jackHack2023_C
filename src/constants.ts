@@ -1,3 +1,25 @@
+export const FireWorks = [
+    {
+        "name": "海の日名古屋みなと祭花火大会",
+        "place": "港区",
+        "tilesetUrl": "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/23100_nagoya/23101_chikusa-ku/low_resolution/tileset.json",
+        "location": {
+            x: -2498.6707232054314,
+            y: 0,
+            z: 1562.2903611493225,
+        }
+    },
+    {
+        "name": "名大祭花火大会",
+        "place": "千種区",
+        "tilesetUrl": "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/23100_nagoya/23101_chikusa-ku/low_resolution/tileset.json",
+        "location": {
+            x: -1201.9406921141401,
+            y: 0,
+            z: -1479.0154123363327,
+        }
+    }
+]
 // copied from: https://github.com/Project-PLATEAU/plateau-streaming-tutorial/blob/e4f5708633d0a62233b8b02a6f9340f50e120556/3dtiles_url.json
 export const LocationPaths = [
     { "CITYCODE": "01100", "TYPE": "bldg", "URL": "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/01100_sapporo/low_resolution/tileset.json" },

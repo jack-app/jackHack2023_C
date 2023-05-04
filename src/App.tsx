@@ -11,18 +11,17 @@ import { Title } from "./Title";
 import { Description } from "./Description";
 import { Footer } from "./Footer";
 import { LocationSelect } from "./LocationSelect";
-import { LocationPaths } from "./constants";
+import { FireWorks } from "./constants";
 
 export const App: React.FC = () => {
-  const [locationPath, setLocationPath] = useState(LocationPaths[0].URL);
+  const [locationPath, setLocationPath] = useState(FireWorks[0].tilesetUrl);
+  const [fireworkLocation, setFireworkLocation] = useState(FireWorks[0].location);
   const onChangeLocationPath = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setLocationPath(event.target.value);
+    const [locationUrl, x, y, z] = event.target.value.split(",");
+    setLocationPath(locationUrl);
+    setFireworkLocation({ x: Number(x), y: Number(y), z: Number(z) });
   };
-  // 最低標高
-  const [minHeight, setMinHeight] = useState(12);
-  const onChangeMinHeight = (value: number) => {
-    setMinHeight(Math.max(value, 12));
-  };
+
   return (
     <>
       <Title />
@@ -30,30 +29,25 @@ export const App: React.FC = () => {
       <LocationSelect onChangeLocation={onChangeLocationPath} />
       <Canvas shadows>
         <axesHelper args={[1000]} />
-        <fogExp2 attach='fog' color='#d7ecff' density={0.0002} />
-        <PerspectiveCamera
-          makeDefault
-          position={[-1600, minHeight + 400, -1400]}
-          near={10}
-          far={1e5}
-        />
+        <fogExp2 attach="fog" color="#d7ecff" density={0.0002} />
+        <PerspectiveCamera makeDefault position={[-1600, 12 + 400, -1400]} near={10} far={1e5} />
         <OrbitControls target={[-1200, 0, -800]} />
         {/* <Plane
           args={[1e5, 1e5]}
-          position={[0, minHeight, 0]}
+          position={[0, 12, 0]}
           rotation={[-Math.PI / 2, 0, 0]}
           receiveShadow
         >
           <meshStandardMaterial color='white' />
         </Plane> */}
         <PlateauTilesetTransform>
-          <PlateauTileset path={locationPath} center/>
+          <PlateauTileset path={locationPath} center />
         </PlateauTilesetTransform>
-        <Illuminator />
-        <EffectComposer>
+        <Illuminator fireworkLocation={fireworkLocation} />
+        {/* <EffectComposer>
           <SSAO intensity={3000} blendFunction={BlendFunction.OVERLAY} />
           <Bloom intensity={2} />
-        </EffectComposer>
+        </EffectComposer> */}
       </Canvas>
       <Footer />
     </>
