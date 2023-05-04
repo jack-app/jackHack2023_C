@@ -18,21 +18,28 @@ export const Illuminator: React.FC<{
   
   const [update,setUpdata]=useState<boolean>(false)
 
+  let isFix = false
+  const fixIlluminator = () => {
+    isFix = !isFix
+  }
+
   useFrame(({ camera, mouse }) => {
     if (ref.current == null || lookat.current == null) {
       return
     }
-    raycaster.setFromCamera(mouse, camera)
-    raycaster.ray.intersectPlane(plane, ref.current.position)
-    lookat.current.position.copy(ref.current.position)
-    lookat.current.position.y = 0
-    setUpdata(update?false:true)
+    if(!isFix){
+      raycaster.setFromCamera(mouse, camera)
+      raycaster.ray.intersectPlane(plane, ref.current.position)
+      lookat.current.position.copy(ref.current.position)
+      lookat.current.position.y = 0
+      setUpdata(update?false:true)
+    }
   })
 
   return (
     <>
       <Sphere ref={lookat} args={[1, 32]}/>
-      <group ref={ref}>
+      <group ref={ref} onClick={fixIlluminator}>
         {lookat.current && <spotLight
           target={lookat.current}
           angle={Math.PI / 4}
