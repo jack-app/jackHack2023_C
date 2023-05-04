@@ -7,11 +7,22 @@ export const Title: React.FC = () => (
   <>
     <h1
       css={css`
-        color: red;
+        color: black;
         font-weight: bold;
+        // background: black;
+        writing-mode: vertical-rl;
+        // border: 5px solid black;
       `}
     >
-      タイトル
+      {/* 打ち上げ花火、下調べしてから見るか */}
+      {/* <img src="/images/618018_l 2.jpg"width = {1450} height = {600} /> */}
     </h1>
+    {/* import Image from 'next/image'
+
+    export const Avatar: React.FC = () => (
+    <Image src="618018_l 2.jpg" width={64} height={64} alt="My avatar" />
+    ) */}
+    {/* <img src="/images/618018_l 2.jpg"width = {1450} height = {600} /> */}
+    <img src="/images/title.png"width = {1450} height = {600} />
   </>
 );
