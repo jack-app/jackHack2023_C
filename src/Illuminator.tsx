@@ -8,7 +8,7 @@ export const Illuminator: React.FC<{
   color?: ColorRepresentation
 }> = ({
   elevation = 300,
-  color = '#ff9f46' // T = 2500K
+  color = '#fd7e00'
 }) => {
   const ref = useRef<Group>(null)
   const lookat = useRef<Sphere>(null)
