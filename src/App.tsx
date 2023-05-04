@@ -48,10 +48,9 @@ export const App: React.FC = () => {
         <meshStandardMaterial color='gray' />
       </Plane>
       <PlateauTilesetTransform>
-        <PlateauTileset path="bldg/13100_tokyo/13101_chiyoda-ku/notexture" center />
-        <PlateauTileset path="bldg/13100_tokyo/13102_chuo-ku/notexture" />
+        <PlateauTileset path={locationPath} center />
       </PlateauTilesetTransform>
-      <Illuminator />
+      <Illuminator fireworkLocation={fireworkLocation}/>
       <EffectComposer>
         <SSAO intensity={3000} blendFunction={BlendFunction.OVERLAY} />
         <Bloom intensity={2} />

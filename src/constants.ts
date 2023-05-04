@@ -1,24 +1,94 @@
 export const FireWorks = [
     {
-        "name": "海の日名古屋みなと祭花火大会",
-        "place": "港区",
-        "tilesetUrl": "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/23100_nagoya/23101_chikusa-ku/low_resolution/tileset.json",
-        "location": {
+        name: "海の日名古屋みなと祭花火大会",
+        place: "名古屋市港区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/23100_nagoya/23101_chikusa-ku/low_resolution/tileset.json",
+        location: {
             x: -2498.6707232054314,
-            y: 0,
+            y: 14,
             z: 1562.2903611493225,
         }
     },
     {
-        "name": "名大祭花火大会",
-        "place": "千種区",
-        "tilesetUrl": "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/23100_nagoya/23101_chikusa-ku/low_resolution/tileset.json",
-        "location": {
+        name: "名大祭花火大会",
+        place: "名古屋市千種区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/23100_nagoya/23101_chikusa-ku/low_resolution/tileset.json",
+        location: {
             x: -1201.9406921141401,
-            y: 0,
+            y: 14,
             z: -1479.0154123363327,
         }
-    }
+    },
+    {
+        name: "大須夏まつり",
+        place: "名古屋市中区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/23100_nagoya/23106_naka-ku/low_resolution/tileset.json",
+        location: {
+            x: 870.2072415772635,
+            y: 14,
+            z: -813.0901965229989
+        }
+    },
+    {
+        name: "隅田川花火大会",
+        place: "東京都墨田区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/13100_tokyo/13107_sumida-ku/notexture/tileset.json",
+        location: {
+            x: 1007.3237602934091,
+            y: 14,
+            z: 3263.2622940695746
+        }
+    },
+    {
+        name: "みなとみらいスマートフェスティバル",
+        place: "横浜市中区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/14100_yokohama/notexture/tileset.json",
+        location: {
+            x: -3608.15079531685,
+            y: 14,
+            z: -11045.704087434928
+        }
+    },
+    {
+        name: "横浜開港祭",
+        place: "横浜市中区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/14100_yokohama/notexture/tileset.json",
+        location: {
+            x: -3608.15079531685,
+            y: 14,
+            z: -11045.704087434928
+        }
+    },
+    {
+        name: "金沢まつり",
+        place: "横浜市中区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/14100_yokohama/notexture/tileset.json",
+        location: {
+            x: -8297.569976471956,
+            y: 14,
+            z: -11045.704087434928
+        }
+    },
+    {
+        name: "鶴見川サマーフェスティバル",
+        place: "横浜市中区",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/14100_yokohama/notexture/tileset.json",
+        location: {
+            x: -5212.241466149731,
+            y: 14,
+            z: 8798.654008097707
+        }
+    },
+    {
+        name: "関門海峡花火大会",
+        place: "北九州市",
+        tilesetUrl: "https://plateau.geospatial.jp/main/data/3d-tiles/bldg/40100_kitakyushu/notexture/tileset.json",
+        location: {
+            x: -7692.393137890584,
+            y: 14,
+            z: 10681.988723948738
+        }
+    },
 ]
 // copied from: https://github.com/Project-PLATEAU/plateau-streaming-tutorial/blob/e4f5708633d0a62233b8b02a6f9340f50e120556/3dtiles_url.json
 export const LocationPaths = [
