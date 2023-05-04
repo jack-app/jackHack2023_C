@@ -18,6 +18,7 @@ export const App: React.FC = () => (
     <Canvas shadows>
       <ambientLight intensity={0.1} />  
       <fog attach='fog' color='#d7ecff' near={2000} far={10000} />
+      {/* @ts-ignore */}
       <PerspectiveCamera
         makeDefault
         position={[-1600, 450, -1400]}
@@ -25,6 +26,7 @@ export const App: React.FC = () => (
         far={1e5}
       />
       <OrbitControls target={[-1200, 0, -800]} />
+      {/* @ts-ignore */}
       <Plane
         args={[1e5, 1e5]}
         position={[0, 0, 0]}

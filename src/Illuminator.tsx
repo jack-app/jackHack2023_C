@@ -22,9 +22,6 @@ export const Illuminator: React.FC<{
   
   const [update,setUpdata]=useState<boolean>(false)
 
-
-  const [update, setUpdata] = useState<boolean>(false);
-
   let isFix = false;
   const fixIlluminator = () => {
 
