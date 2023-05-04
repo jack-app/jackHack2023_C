@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { Box3, Matrix4, Mesh, MeshStandardMaterial, Vector3 } from 'three'
+import { Box3, Matrix4, Mesh, MeshLambertMaterial, Vector3 } from 'three'
 import { GLTFLoader } from 'three-stdlib'
 
 import { CesiumRTCPlugin } from './CesiumRTCPlugin'
@@ -16,8 +16,10 @@ import { PlateauTilesetTransformContext } from './PlateauTilesetTransform'
 const gltfLoader = new GLTFLoader()
 gltfLoader.register(parser => new CesiumRTCPlugin(parser))
 
-const material = new MeshStandardMaterial({
-  metalness: 0.5
+const material = new MeshLambertMaterial({
+  opacity: 0.1,
+  transparent: true,
+  depthTest: false
 })
 
 export interface PlateauTilesetProps {
