@@ -24,7 +24,7 @@ export const Illuminator: React.FC<{
   const fixIlluminator = () => {
     isFix = !isFix
   }
-  const texture = useLoader(TextureLoader, 'PavingStones092_1K_Color.jpg')
+  const texture = useLoader(TextureLoader, 'circle.png')
 
   useFrame(({ camera, mouse }) => {
     if (ref.current == null || lookat.current == null) {
@@ -34,7 +34,7 @@ export const Illuminator: React.FC<{
       raycaster.setFromCamera(mouse, camera)
       raycaster.ray.intersectPlane(plane, ref.current.position)
       lookat.current.position.copy(ref.current.position)
-      lookat.current.position.y = 100
+      lookat.current.position.y = 2
       setUpdata(update?false:true)
     }
   })
@@ -42,15 +42,16 @@ export const Illuminator: React.FC<{
 
   return (
     <>
-      <mesh ref={lookat}>
-        <circleGeometry args={[100, 40]}  />
-        <meshBasicMaterial map={texture}/>
+      <mesh ref={lookat} receiveShadow rotation={[-Math.PI/2,0,0]}>
+        <circleGeometry args={[700, 80]} />
+        <meshLambertMaterial map={texture}/>
       </mesh>
       <group ref={ref} onClick={fixIlluminator}>
         {lookat.current && <spotLight
           target={lookat.current}
-          angle={1.37}
-          color={color}
+          intensity={1}
+          angle={Math.atan(700/300)}
+          color="white"
           castShadow
           shadow-radius={20}
           shadow-mapSize={[2048, 2048]}

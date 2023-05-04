@@ -16,7 +16,8 @@ export const App: React.FC = () => (
     <Title />
     <Description />
     <Canvas shadows>
-      <fog attach='fog' color='#d7ecff' near={1000} far={10000} />
+      <ambientLight intensity={0.1} />  
+      <fog attach='fog' color='#d7ecff' near={2000} far={10000} />
       <PerspectiveCamera
         makeDefault
         position={[-1600, 450, -1400]}
@@ -30,7 +31,7 @@ export const App: React.FC = () => (
         rotation={[-Math.PI / 2, 0, 0]}
         receiveShadow
       >
-        <meshStandardMaterial color='white' />
+        <meshStandardMaterial color='gray' />
       </Plane>
       <PlateauTilesetTransform>
         <PlateauTileset
