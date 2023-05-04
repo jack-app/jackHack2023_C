@@ -1,3 +1,4 @@
+
 import { Sphere } from '@react-three/drei'
 import { useFrame, useLoader } from '@react-three/fiber'
 import React, { useEffect, useRef, useState } from 'react'
@@ -6,10 +7,11 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import type { Mesh } from 'three';
 
 export const Illuminator: React.FC<{
-  elevation?: number
-  color?: ColorRepresentation
+  elevation?: number;
+  color?: ColorRepresentation;
 }> = ({
   elevation = 300,
+
   color = '#fd7e00'
 }) => {
   const ref = useRef<Group>(null)
@@ -20,24 +22,31 @@ export const Illuminator: React.FC<{
   
   const [update,setUpdata]=useState<boolean>(false)
 
-  let isFix = false
+
+  const [update, setUpdata] = useState<boolean>(false);
+
+  let isFix = false;
   const fixIlluminator = () => {
+
     isFix = !isFix
   }
   const texture = useLoader(TextureLoader, 'circle.png')
 
+
   useFrame(({ camera, mouse }) => {
     if (ref.current == null || lookat.current == null) {
-      return
+      return;
     }
     if(!isFix){
       raycaster.setFromCamera(mouse, camera)
       raycaster.ray.intersectPlane(plane, ref.current.position)
+      // @ts-ignore
       lookat.current.position.copy(ref.current.position)
+      // @ts-ignore
       lookat.current.position.y = 2
       setUpdata(update?false:true)
     }
-  })
+  });
 
 
   return (
@@ -47,6 +56,7 @@ export const Illuminator: React.FC<{
         <meshLambertMaterial map={texture}/>
       </mesh>
       <group ref={ref} onClick={fixIlluminator}>
+        {/* @ts-ignore */}
         {lookat.current && <spotLight
           target={lookat.current}
           intensity={1}
@@ -56,10 +66,11 @@ export const Illuminator: React.FC<{
           shadow-radius={20}
           shadow-mapSize={[2048, 2048]}
           />}
+        {/* @ts-ignore */}
         <Sphere args={[5, 32]}>
           <meshStandardMaterial emissive={color} emissiveIntensity={10} />
         </Sphere>
       </group>
     </>
-  )
-}
+  );
+};
