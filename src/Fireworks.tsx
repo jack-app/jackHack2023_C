@@ -30,13 +30,15 @@ function makeFireworks(radious, length){
   // 形状データを作成
   const geometry = new BufferGeometry();
   geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3));
+  geometry.computeBoundingBox ()
+  geometry.center()
   
   // マテリアルを作成
   const material = new PointsMaterial({
     // 一つ一つのサイズ
     size: 10,
     // 色
-    color: "#CB4829",
+    color: "#f49100",
     transparent : true
   });
   
@@ -46,14 +48,20 @@ function makeFireworks(radious, length){
 }
 
 // 形状データを作成
-const SIZE = 100;
+const SIZE = 10;
 // 配置する個数
 const LENGTH = 1000;
 let mesh = makeFireworks(SIZE, LENGTH)
 
+let flame = 0
+function fireworksRadious(t:number){
+  return Math.sqrt(SIZE + t)*30
+}
+
 export interface FireworksProps {
   position: Vector3
 }
+
 
 export const Fireworks: React.FC<FireworksProps> = ({
   position
@@ -63,6 +71,7 @@ export const Fireworks: React.FC<FireworksProps> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       mesh = makeFireworks(SIZE, LENGTH)
+      flame = 0
     }, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -71,14 +80,17 @@ export const Fireworks: React.FC<FireworksProps> = ({
     if (ref.current == null) {
       return
     }
-    ref.current.position.copy(position)
+    
+    flame += 1
+    const dr = fireworksRadious(flame+1)/fireworksRadious(flame)
     mesh.applyMatrix4(new Matrix4().set(
-      1.01, 0, 0, 0,
-      0, 1.01, 0, 0,
-      0, 0, 1.01, 0,
+      dr, 0, 0, 0,
+      0, dr, 0, 0,
+      0, 0, dr, 0,
       0, 0, 0, 1
     ))
     mesh.material.opacity = Math.max(0, mesh.material.opacity-0.01)
+    ref.current.position.copy(position)
   })
   return(
     <primitive ref={ref} object={mesh}/>
