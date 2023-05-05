@@ -43,11 +43,11 @@ export const Footer: React.FC = () => (
         <div className="footer02">
   <ul className="menu">
     <li><a href="#">一番上へ</a></li>
-    <li><a href="https://twitter.com/jack20200001101">Jack twitter</a></li>
+    <li><a href="https://twitter.com/jack20200001101">jack twitter</a></li>
     <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeGorKnPS9iZiMva8bNivDDAPgCAG2-fsWStmmCxGhTVF9xkA/viewform?embedded=true">お問い合わせ</a></li>
     
   <p className="copyright">
-    &copy; 2023.5.5 JackHack2023_teamC
+    &copy; 2023.5.5 jackHack2023_teamC
   </p>
   </ul>
 </div>
