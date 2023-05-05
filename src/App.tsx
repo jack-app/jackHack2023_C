@@ -1,9 +1,10 @@
-import { OrbitControls, PerspectiveCamera, Plane } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, Plane, Sphere } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer, SSAO } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import React, { useState } from "react";
 import { css } from "@emotion/react";
+import { DoubleSide } from "three";
 
 import { Illuminator } from "../src/Illuminator";
 import { PlateauTileset } from "../src/PlateauTileset";
@@ -47,7 +48,7 @@ export const App: React.FC = () => {
         >
           <Canvas shadows>
             <ambientLight intensity={0.1} />
-            <fog attach="fog" color="#d7ecff" near={2000} far={10000} />
+            <fog attach="fog" color="#000000" near={2000} far={10000} />
             {/* @ts-ignore */}
             <PerspectiveCamera makeDefault position={
               [fireworkLocation.x-700, fireworkLocation.y+1000, fireworkLocation.z-1500]
@@ -56,6 +57,9 @@ export const App: React.FC = () => {
               [fireworkLocation.x, fireworkLocation.y, fireworkLocation.z]
             } />
             {/* @ts-ignore */}
+            <Sphere args={[10000, 32]}>
+              <meshStandardMaterial color="black" side={DoubleSide}/>
+            </Sphere>
             <Plane args={[1e5, 1e5]} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
               <meshStandardMaterial color="gray" />
             </Plane>
