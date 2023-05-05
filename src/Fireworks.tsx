@@ -54,15 +54,15 @@ const LENGTH = 1000;
 let mesh = makeFireworks(SIZE, LENGTH)
 
 function sigmoid(x:number){
-  if(x>0){
-    return 1/(1+Math.exp(-x))
-  }else{
-    return 1-1/(1+Math.exp(x))
-  }
+  return 1/(1+Math.exp(-x))
 }
 let flame = 0
 function fireworksRadious(t:number){
-  return Math.sqrt(SIZE + t)*100
+  return SIZE*(1+50*(sigmoid(t/50)-0.5))
+}
+function fireworksAltitude(t:number){
+  const x = t/50
+  return (-30*x*(x-3)+250/3*x - 100/3*(x-3))*2
 }
 
 export interface FireworksProps {
@@ -79,7 +79,7 @@ export const Fireworks: React.FC<FireworksProps> = ({
     const interval = setInterval(() => {
       mesh = makeFireworks(SIZE, LENGTH)
       flame = 0
-    }, 2000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
   
@@ -96,8 +96,9 @@ export const Fireworks: React.FC<FireworksProps> = ({
       0, 0, dr, 0,
       0, 0, 0, 1
     ))
-    mesh.material.opacity = Math.max(0, mesh.material.opacity-0.01)
+    mesh.material.opacity = Math.max(0, mesh.material.opacity-0.006)
     ref.current.position.copy(position)
+    ref.current.position.y = fireworksAltitude(flame)
   })
   return(
     <primitive ref={ref} object={mesh}/>

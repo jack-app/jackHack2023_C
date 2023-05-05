@@ -8,14 +8,12 @@ import type { Mesh } from 'three';
 
 import { Fireworks } from './Fireworks'
 
+
 export const Illuminator: React.FC<{
+  fireworkLocation: { x: number; y: number; z: number };
   elevation?: number;
   color?: ColorRepresentation;
-}> = ({
-  elevation = 300,
-
-  color = '#fd7e00'
-}) => {
+}> = ({ elevation = 300, fireworkLocation = { x: 0, y: 0, z: 0 }, color = "#fd7e00" }) => {
   const ref = useRef<Group>(null)
   const lookat = useRef<Mesh>(null)
   const [raycaster] = useState(() => new Raycaster())
@@ -24,27 +22,19 @@ export const Illuminator: React.FC<{
   
   const [update,setUpdata]=useState<boolean>(false)
 
-  let isFix = false;
-  const fixIlluminator = () => {
-
-    isFix = !isFix
-  }
   const texture = useLoader(TextureLoader, 'circle_6.png')
 
 
-  useFrame(({ camera, mouse }) => {
+  let location = new Vector3(fireworkLocation.x, fireworkLocation.y+300, fireworkLocation.z)
+  useFrame(() => {
     if (ref.current == null || lookat.current == null) {
       return;
     }
-    if(!isFix){
-      raycaster.setFromCamera(mouse, camera)
-      raycaster.ray.intersectPlane(plane, ref.current.position)
-      // @ts-ignore
-      lookat.current.position.copy(ref.current.position)
-      // @ts-ignore
-      lookat.current.position.y = 2
-      setUpdata(update?false:true)
-    }
+    // @ts-ignore
+    ref.current.position.copy(location)
+    lookat.current.position.copy(ref.current.position)
+    lookat.current.position.y = 2
+    setUpdata(update?false:true)
   });
 
 
@@ -54,7 +44,7 @@ export const Illuminator: React.FC<{
         <circleGeometry args={[700, 80]} />
         <meshLambertMaterial map={texture}/>
       </mesh>
-      <group ref={ref} onClick={fixIlluminator}>
+      <group ref={ref}>
         {/* @ts-ignore */}
         {lookat.current && <spotLight
           target={lookat.current}
