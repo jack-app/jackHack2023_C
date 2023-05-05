@@ -40,9 +40,7 @@ export const App: React.FC = () => {
         <div
           css={css`
             width: 100%;
-            ${sp`
             height: 80svh;
-            `}
           `}
         >
           <Canvas shadows>
