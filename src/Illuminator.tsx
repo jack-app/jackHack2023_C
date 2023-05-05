@@ -5,6 +5,8 @@ import { ColorRepresentation, Group, Plane, Raycaster, Vector3 } from "three";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import type { Mesh } from "three";
 
+import { Fireworks } from './Fireworks'
+
 export const Illuminator: React.FC<{
   fireworkLocation: { x: number; y: number; z: number };
   elevation?: number;
@@ -26,7 +28,7 @@ export const Illuminator: React.FC<{
     if (ref.current == null || lookat.current == null) {
       return;
     }
-    ref.current.position.set(location.x, location.y, location.z);
+    ref.current.position.set(location.x, location.y + 300, location.z);
   });
 
   return (
@@ -43,6 +45,7 @@ export const Illuminator: React.FC<{
           <meshStandardMaterial emissive={color} emissiveIntensity={10} />
         </Sphere>
       </group>
+      <Fireworks position={ref.current ? ref.current.position : new Vector3 (0,0,0)} />
     </>
   );
 };

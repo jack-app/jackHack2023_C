@@ -49,8 +49,8 @@ export const App: React.FC = () => {
             <ambientLight intensity={0.1} />
             <fog attach="fog" color="#d7ecff" near={2000} far={10000} />
             {/* @ts-ignore */}
-            <PerspectiveCamera makeDefault position={[-1600, 450, -1400]} near={10} far={1e5} />
-            <OrbitControls target={[-1200, 0, -800]} />
+            <PerspectiveCamera makeDefault position={[-1600, 1500, -1400]} near={10} far={1e5} />
+            <OrbitControls target={[-1200, 300, -800]} />
             {/* @ts-ignore */}
             <Plane args={[1e5, 1e5]} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
               <meshStandardMaterial color="gray" />
