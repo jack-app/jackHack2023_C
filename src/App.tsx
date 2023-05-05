@@ -1,9 +1,10 @@
-import { OrbitControls, PerspectiveCamera, Plane } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, Plane, Sphere } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer, SSAO } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import React, { useState } from "react";
 import { css } from "@emotion/react";
+import { DoubleSide, Vector3 } from "three";
 
 import { Illuminator } from "../src/Illuminator";
 import { PlateauTileset } from "../src/PlateauTileset";
@@ -14,6 +15,7 @@ import { Footer } from "./Footer";
 import { LocationSelect } from "./LocationSelect";
 import { FireWorks } from "./constants";
 import { sp, pc, vw } from "./media";
+import { StarrySky } from "./StarrySky";
 
 export const App: React.FC = () => {
   const [locationPath, setLocationPath] = useState(FireWorks[0].tilesetUrl);
@@ -45,7 +47,7 @@ export const App: React.FC = () => {
         >
           <Canvas shadows>
             <ambientLight intensity={0.1} />
-            <fog attach="fog" color="#d7ecff" near={2000} far={10000} />
+            <fog attach="fog" color="#000000" near={5000} far={10000} />
             {/* @ts-ignore */}
             <PerspectiveCamera makeDefault position={
               [fireworkLocation.x-700, fireworkLocation.y+1000, fireworkLocation.z-1500]
@@ -53,6 +55,11 @@ export const App: React.FC = () => {
             <OrbitControls target={
               [fireworkLocation.x, fireworkLocation.y, fireworkLocation.z]
             } />
+            {/* @ts-ignore */}
+            <Sphere args={[10000, 32]}>
+              <meshStandardMaterial color="black" side={DoubleSide}/>
+            </Sphere>
+            <StarrySky />
             {/* @ts-ignore */}
             <Plane args={[1e5, 1e5]} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
               <meshStandardMaterial color="gray" />

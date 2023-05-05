@@ -56,9 +56,6 @@ export const Illuminator: React.FC<{
           shadow-mapSize={[2048, 2048]}
           />}
         {/* @ts-ignore */}
-        <Sphere args={[5, 32]}>
-          <meshStandardMaterial emissive={color} emissiveIntensity={10} />
-        </Sphere>
       </group>
       <Fireworks position={ref.current ? ref.current.position : new Vector3 (0,0,0)} />
     </>
