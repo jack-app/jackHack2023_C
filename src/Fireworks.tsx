@@ -53,9 +53,16 @@ const SIZE = 10;
 const LENGTH = 1000;
 let mesh = makeFireworks(SIZE, LENGTH)
 
+function sigmoid(x:number){
+  if(x>0){
+    return 1/(1+Math.exp(-x))
+  }else{
+    return 1-1/(1+Math.exp(x))
+  }
+}
 let flame = 0
 function fireworksRadious(t:number){
-  return Math.sqrt(SIZE + t)*30
+  return Math.sqrt(SIZE + t)*100
 }
 
 export interface FireworksProps {
