@@ -22,29 +22,18 @@ export const Illuminator: React.FC<{
   
   const [update,setUpdata]=useState<boolean>(false)
 
-  let isFix = false;
-  const fixIlluminator = () => {
-
-    isFix = !isFix
-  }
   const texture = useLoader(TextureLoader, 'circle.png')
 
   let location = new Vector3(fireworkLocation.x, fireworkLocation.y+300, fireworkLocation.z)
-  useFrame(({ camera, mouse }) => {
+  useFrame(() => {
     if (ref.current == null || lookat.current == null) {
       return;
     }
-    if(!isFix){
-      raycaster.setFromCamera(mouse, camera)
-      raycaster.ray.intersectPlane(plane, ref.current.position)
-      // @ts-ignore
-      lookat.current.position.copy(ref.current.position)
-      // @ts-ignore
-      ref.current.position.copy( location)
-      lookat.current.position.copy(ref.current.position)
-      lookat.current.position.y = 2
-      setUpdata(update?false:true)
-    }
+    // @ts-ignore
+    ref.current.position.copy(location)
+    lookat.current.position.copy(ref.current.position)
+    lookat.current.position.y = 2
+    setUpdata(update?false:true)
   });
 
 
@@ -54,7 +43,7 @@ export const Illuminator: React.FC<{
         <circleGeometry args={[700, 80]} />
         <meshLambertMaterial map={texture}/>
       </mesh>
-      <group ref={ref} onClick={fixIlluminator}>
+      <group ref={ref}>
         {/* @ts-ignore */}
         {lookat.current && <spotLight
           target={lookat.current}
