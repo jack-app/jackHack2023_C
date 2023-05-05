@@ -21,11 +21,11 @@ export const App: React.FC = () => (
       {/* @ts-ignore */}
       <PerspectiveCamera
         makeDefault
-        position={[-1600, 450, -1400]}
+        position={[-1600, 1500, -1400]}
         near={10}
         far={1e5}
       />
-      <OrbitControls target={[-1200, 0, -800]} />
+      <OrbitControls target={[-1200, 300, -800]} />
       {/* @ts-ignore */}
       <Plane
         args={[1e5, 1e5]}
