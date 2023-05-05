@@ -29,7 +29,7 @@ export const Illuminator: React.FC<{
 
     isFix = !isFix
   }
-  const texture = useLoader(TextureLoader, 'circle.png')
+  const texture = useLoader(TextureLoader, 'circle_6.png')
 
 
   useFrame(({ camera, mouse }) => {
