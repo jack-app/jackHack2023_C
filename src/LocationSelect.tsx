@@ -1,13 +1,14 @@
 import React from "react";
 import { css } from "@emotion/react";
 import { LocationPaths, FireWorks } from "./constants";
+import { sp, pc, vw } from "./media";
 
 interface Props {
   onChangeLocation: (locationUrl: string, location: { x: number; y: number; z: number }) => void;
 }
 export const RawLocationSelect: React.FC<Props> = ({ onChangeLocation }) => (
   <>
-    <select >
+    <select>
       {LocationPaths.map((path) => {
         if (path.TYPE == "bldg" && path.URL.match(/notexture/))
           return (
@@ -20,36 +21,69 @@ export const RawLocationSelect: React.FC<Props> = ({ onChangeLocation }) => (
   </>
 );
 
-export const LocationSelect: React.FC<Props> = ({ onChangeLocation }) => (
-  <div>
-    {FireWorks.map((firework) => {
-      return (
-        <div 
-        tabIndex={0}
-        onKeyDown={(e) => {onChangeLocation(firework.tilesetUrl, firework.location)}}
-        onClick={(e) => {onChangeLocation(firework.tilesetUrl, firework.location)}}
-        role="button"
-        css={css`
-          border: 1px solid #446173;
-          margin: 0 0 -1px;
-          &:hover {
+export const LocationSelect: React.FC<Props> = ({ onChangeLocation }) => {
+  const [selected, setSelected] = React.useState(FireWorks[0].name);
+
+  return (
+    <div
+      css={css`
+        min-width: max-content;
+        ${sp`
+        width: 100%;
+        heitht: 30svh;
+        overflow: scroll;
+      `}
+      `}
+    >
+      {FireWorks.map((firework) => {
+        return (
+          <div
+            tabIndex={0}
+            onKeyDown={(e) => {
+              setSelected(firework.name);
+              onChangeLocation(firework.tilesetUrl, firework.location);
+            }}
+            onClick={(e) => {
+              setSelected(firework.name);
+              onChangeLocation(firework.tilesetUrl, firework.location);
+            }}
+            role="button"
+            css={css`
+              border: 1px solid #446173;
+              margin: 0 0 -1px;
+              padding: 0.2em;
+              cursor: pointer;
+              &:hover {
+                background-color: #446173;
+                color: #fff;
+                .location_name {
+                  color: #fff;
+                }
+              }
+              .location_name {
+                color: #446173;
+              }
+              ${selected === firework.name &&
+              `
             background-color: #446173;
             color: #fff;
-          }
-          cursor: pointer;
-          padding: 0.2em;
-        `}>
-          <div css={css`
-            font-weight: bold;
+            .location_name{
+              color: #fff;
+            }
           `}
-          >{firework.name}</div>
-          <span css={css`
-            font-size: 0.8em;
-            color: #446173;
-          `}
-          >{firework.place}</span>
-        </div>
-      );
-    })}
-  </div>
-);
+            `}
+          >
+            <div
+              css={css`
+                font-weight: bold;
+              `}
+            >
+              {firework.name}
+            </div>
+            <span className="location_name">{firework.place}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

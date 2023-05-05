@@ -13,6 +13,7 @@ import { Description } from "./Description";
 import { Footer } from "./Footer";
 import { LocationSelect } from "./LocationSelect";
 import { FireWorks } from "./constants";
+import { sp, pc, vw } from "./media";
 
 export const App: React.FC = () => {
   const [locationPath, setLocationPath] = useState(FireWorks[0].tilesetUrl);
@@ -28,29 +29,38 @@ export const App: React.FC = () => {
       <Description />
       <div
         css={css`
+          ${pc`
           display: flex;
+          flex-direction: row;
+          `}
         `}
       >
         <LocationSelect onChangeLocation={onChangeLocationPath} />
-        <Canvas shadows css={css`height: 100%`}>
-          <ambientLight intensity={0.1} />
-          <fog attach="fog" color="#d7ecff" near={2000} far={10000} />
-          {/* @ts-ignore */}
-          <PerspectiveCamera makeDefault position={[-1600, 450, -1400]} near={10} far={1e5} />
-          <OrbitControls target={[-1200, 0, -800]} />
-          {/* @ts-ignore */}
-          <Plane args={[1e5, 1e5]} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-            <meshStandardMaterial color="gray" />
-          </Plane>
-          <PlateauTilesetTransform>
-            <PlateauTileset path={locationPath} center />
-          </PlateauTilesetTransform>
-          <Illuminator fireworkLocation={fireworkLocation} />
-          <EffectComposer>
-            <SSAO intensity={3000} blendFunction={BlendFunction.OVERLAY} />
-            <Bloom intensity={2} />
-          </EffectComposer>
-        </Canvas>
+        <div
+          css={css`
+            width: 100%;
+          `}
+        >
+          <Canvas shadows>
+            <ambientLight intensity={0.1} />
+            <fog attach="fog" color="#d7ecff" near={2000} far={10000} />
+            {/* @ts-ignore */}
+            <PerspectiveCamera makeDefault position={[-1600, 450, -1400]} near={10} far={1e5} />
+            <OrbitControls target={[-1200, 0, -800]} />
+            {/* @ts-ignore */}
+            <Plane args={[1e5, 1e5]} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+              <meshStandardMaterial color="gray" />
+            </Plane>
+            <PlateauTilesetTransform>
+              <PlateauTileset path={locationPath} center />
+            </PlateauTilesetTransform>
+            <Illuminator fireworkLocation={fireworkLocation} />
+            <EffectComposer>
+              <SSAO intensity={3000} blendFunction={BlendFunction.OVERLAY} />
+              <Bloom intensity={2} />
+            </EffectComposer>
+          </Canvas>
+        </div>
       </div>
       <Footer />
     </>

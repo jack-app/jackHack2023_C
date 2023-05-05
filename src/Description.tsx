@@ -26,8 +26,6 @@ export const Description: React.FC = () => (
       <div>
         <h3
           css={css`
-          padding-top:100px;
-          margin-left:100px;
           color: black;
           font-family:serif;
 
@@ -78,9 +76,6 @@ export const Description: React.FC = () => (
 
         <h2
           css={css`
-          margin-top:30px;
-          margin-left:100px;
-          padding-bottom:60px;
           color: black;
           font-family:serif;
           
