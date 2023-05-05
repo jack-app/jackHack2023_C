@@ -62,6 +62,7 @@ export const App: React.FC = () => {
               <meshStandardMaterial color="black" side={DoubleSide}/>
             </Sphere>
             <StarrySky />
+            {/* @ts-ignore */}
             <Plane args={[1e5, 1e5]} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
               <meshStandardMaterial color="gray" />
             </Plane>
