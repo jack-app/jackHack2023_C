@@ -27,10 +27,10 @@ export const LocationSelect: React.FC<Props> = ({ onChangeLocation }) => {
   return (
     <div
       css={css`
-        min-width: max-content;
+        min-width: 12em;
         ${sp`
         width: 100%;
-        heitht: 30svh;
+        height: 30svh;
         overflow: scroll;
       `}
       `}

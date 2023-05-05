@@ -29,6 +29,7 @@ export const App: React.FC = () => {
       <Description />
       <div
         css={css`
+          margin-top: 1em;
           ${pc`
           display: flex;
           flex-direction: row;
@@ -39,6 +40,9 @@ export const App: React.FC = () => {
         <div
           css={css`
             width: 100%;
+            ${sp`
+            height: 80svh;
+            `}
           `}
         >
           <Canvas shadows>
