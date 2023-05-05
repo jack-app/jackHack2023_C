@@ -49,27 +49,24 @@ export const LocationSelect: React.FC<Props> = ({ onChangeLocation }) => {
             }}
             role="button"
             css={css`
-              border: 1px solid #446173;
+              border: 1px solid #16274a;
               margin: 0 0 -1px;
               padding: 0.2em;
               cursor: pointer;
+              color: #fff;
+              background-color: #233b6c;
               &:hover {
-                background-color: #446173;
-                color: #fff;
+                background-color: #16274a;
                 .location_name {
                   color: #fff;
                 }
               }
               .location_name {
-                color: #446173;
+                color: #8693ad;
               }
               ${selected === firework.name &&
               `
-            background-color: #446173;
-            color: #fff;
-            .location_name{
-              color: #fff;
-            }
+            background-color: #16274a;
           `}
             `}
           >
