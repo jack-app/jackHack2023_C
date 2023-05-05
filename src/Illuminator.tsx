@@ -42,6 +42,8 @@ export const Illuminator: React.FC<{
       // @ts-ignore
       lookat.current.position.copy(ref.current.position)
       // @ts-ignore
+      ref.current.position.copy( new Vector3(0,300,0))
+      lookat.current.position.copy(ref.current.position)
       lookat.current.position.y = 2
       setUpdata(update?false:true)
     }
