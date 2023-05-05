@@ -121,6 +121,7 @@ export const Description: React.FC = () => (
     <div
       css={css`
         margin: 1em;
+        color: white;
       `}
     >
       <h2
