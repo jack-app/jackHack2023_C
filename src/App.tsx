@@ -75,6 +75,7 @@ export const App: React.FC = () => {
             height: 80svh;
           `}
         >
+          {/* @ts-ignore */}
           <FullScreen ref={fullScreenRef} onFullScreenChange={onFullScreenChange}>
             <Canvas shadows>
               <ambientLight intensity={0.1} />
