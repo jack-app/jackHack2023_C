@@ -60,6 +60,10 @@ let flame = 0
 function fireworksRadious(t:number){
   return SIZE*(1+50*(sigmoid(t/50)-0.5))
 }
+function fireworksAltitude(t:number){
+  const x = t/50
+  return (-30*x*(x-3)+250/3*x - 100/3*(x-3))*2
+}
 
 export interface FireworksProps {
   position: Vector3
@@ -94,6 +98,7 @@ export const Fireworks: React.FC<FireworksProps> = ({
     ))
     mesh.material.opacity = Math.max(0, mesh.material.opacity-0.006)
     ref.current.position.copy(position)
+    ref.current.position.y = fireworksAltitude(flame)
   })
   return(
     <primitive ref={ref} object={mesh}/>
