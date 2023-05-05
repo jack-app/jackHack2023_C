@@ -22,7 +22,8 @@ export const Illuminator: React.FC<{
   
   const [update,setUpdata]=useState<boolean>(false)
 
-  const texture = useLoader(TextureLoader, 'circle.png')
+  const texture = useLoader(TextureLoader, 'circle_6.png')
+
 
   let location = new Vector3(fireworkLocation.x, fireworkLocation.y+300, fireworkLocation.z)
   useFrame(() => {
