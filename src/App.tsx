@@ -1,9 +1,10 @@
-import { OrbitControls, PerspectiveCamera, Plane } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, Plane, Sphere } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer, SSAO } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import React, { useState, useEffect } from "react";
 import { css } from "@emotion/react";
+import { DoubleSide, Vector3 } from "three";
 
 import { Illuminator } from "../src/Illuminator";
 import { PlateauTileset } from "../src/PlateauTileset";
@@ -15,6 +16,7 @@ import { LocationSelect } from "./LocationSelect";
 import { FireWorks } from "./constants";
 import { sp, pc, vw } from "./media";
 import FullScreen from "react-request-fullscreen";
+import { StarrySky } from "./StarrySky";
 
 export const App: React.FC = () => {
   const [locationPath, setLocationPath] = useState(FireWorks[0].tilesetUrl);
@@ -76,10 +78,19 @@ export const App: React.FC = () => {
           <FullScreen ref={fullScreenRef} onFullScreenChange={onFullScreenChange}>
             <Canvas shadows>
               <ambientLight intensity={0.1} />
-              <fog attach="fog" color="#d7ecff" near={2000} far={10000} />
+              <fog attach="fog" color="#000000" near={5000} far={10000} />
               {/* @ts-ignore */}
-              <PerspectiveCamera makeDefault position={[-1600, 1500, -1400]} near={10} far={1e5} />
-              <OrbitControls target={[-1200, 300, -800]} />
+              <PerspectiveCamera makeDefault position={
+                [fireworkLocation.x-700, fireworkLocation.y+1000, fireworkLocation.z-1500]
+              } near={10} far={1e5} />
+              <OrbitControls target={
+                [fireworkLocation.x, fireworkLocation.y, fireworkLocation.z]
+              } />
+              {/* @ts-ignore */}
+              <Sphere args={[10000, 32]}>
+                <meshStandardMaterial color="black" side={DoubleSide}/>
+              </Sphere>
+              <StarrySky />
               {/* @ts-ignore */}
               <Plane args={[1e5, 1e5]} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
                 <meshStandardMaterial color="gray" />
